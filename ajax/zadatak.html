@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div>
+      <p id="results">
+        Rezultati
+      </p>
+      <p>
+        <button type="button" name="btn" onclick="getJQResults();">Ucitaj rezultate</button>
+      </p>
+    </div>
+
+
+    <script type="text/javascript">
+      function getJQResults(){
+        $.ajax({
+          url:"http://ndf.cubes.rs/ajax.php",
+          method:"GET",
+          dataType:"html",
+          data:{ id: 1 }
+        })
+
+        .done(function(data){
+          $("#results").html(data);
+        })
+
+        .fail(function(){
+          $("#results").html("Desila se greska");
+        });
+
+      }
+    </script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </body>
+</html>
