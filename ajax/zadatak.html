@@ -10,7 +10,8 @@
         Rezultati
       </p>
       <p>
-        <button type="button" name="btn" onclick="getJQResults();">Ucitaj rezultate</button>
+        <button type="button" name="btn" onclick="getJQResults();">Ucitaj HTML rezultate</button>
+        <button type="button" name="btn" onclick="getJSONResults();">Ucitaj JSON rezultate</button>
       </p>
     </div>
 
@@ -21,11 +22,39 @@
           url:"http://ndf.cubes.rs/ajax.php",
           method:"GET",
           dataType:"html",
-          data:{ id: 1 }
+          data:{ format: "html" }
         })
 
         .done(function(data){
           $("#results").html(data);
+        })
+
+        .fail(function(){
+          $("#results").html("Desila se greska");
+        });
+
+      }
+
+
+      function getJSONResults(){
+        $.ajax({
+          url:"http://ndf.cubes.rs/ajax.php",
+          method:"GET",
+          dataType:"json",
+          data:{ format: "json"}
+        })
+
+        .done(function(data){
+
+          var tbl = "<table>";
+
+          $.each(data, function(key,value){
+            tbl += "<tr><td>" + value.id + "</td><td>" + value.first_name + "</td><td>" + value.last_name + "</td><td>" + value.age + "</td></tr>";
+          })
+
+          tbl += "</table>";
+
+          $("#results").html(tbl);
         })
 
         .fail(function(){
